@@ -4,5 +4,10 @@ class Coin {
   String acronym;
   double price;
 
-  Coin(this.icon,this.name,this.acronym,this.price);
+  Coin({
+    required this.icon,
+    required this.name,
+    required this.acronym,
+    required this.price,
+});
 }
