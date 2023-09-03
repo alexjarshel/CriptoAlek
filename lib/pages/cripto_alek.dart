@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:urubu_do_pix/models/coin.dart';
+import 'package:urubu_do_pix/pages/coin_details_page.dart';
 import 'package:urubu_do_pix/repositories/coin_repository.dart';
 import 'package:intl/intl.dart';
 
@@ -15,7 +16,7 @@ class _CriptoAlekState extends State<CriptoAlek> {
   NumberFormat real = NumberFormat.currency(locale: 'pt_BR', name: 'R\$');
   List<Coin> selectedCoin = [];
 
-  //functioons
+  //functions
   dinamicAppBar() {
     if (selectedCoin.isEmpty) {
       return AppBar(
@@ -55,6 +56,17 @@ class _CriptoAlekState extends State<CriptoAlek> {
     });
   }
 
+  showDetails(coin) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => CoinDetails(
+          coin: coin,
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,6 +77,8 @@ class _CriptoAlekState extends State<CriptoAlek> {
                 onTap: () {
                   if (selectedCoin.isNotEmpty) {
                     selectCois(selectedCoin, coin);
+                  } else {
+                    showDetails(table[coin]);
                   }
                 },
                 // -> estilização
