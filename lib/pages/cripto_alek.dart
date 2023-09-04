@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:urubu_do_pix/models/coin.dart';
 import 'package:urubu_do_pix/pages/coin_details_page.dart';
+import 'package:urubu_do_pix/pages/favorite_page.dart';
 import 'package:urubu_do_pix/repositories/coin_repository.dart';
 import 'package:intl/intl.dart';
+import 'package:urubu_do_pix/repositories/favorites_repository.dart';
 
 class CriptoAlek extends StatefulWidget {
   const CriptoAlek({super.key});
@@ -15,6 +18,7 @@ class _CriptoAlekState extends State<CriptoAlek> {
   final table = CoinRepository.table;
   NumberFormat real = NumberFormat.currency(locale: 'pt_BR', name: 'R\$');
   List<Coin> selectedCoin = [];
+  late FavoritesRepository favorites;
 
   //functions
   dinamicAppBar() {
@@ -67,8 +71,17 @@ class _CriptoAlekState extends State<CriptoAlek> {
     );
   }
 
+  clearSelected(){
+    setState(() {
+      selectedCoin = [];
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    //favorites = Provider.of<FavoritesRepository>(context);
+    favorites = context.watch<FavoritesRepository>();
+
     return Scaffold(
         appBar: dinamicAppBar(),
         body: ListView.separated(
@@ -114,7 +127,10 @@ class _CriptoAlekState extends State<CriptoAlek> {
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: selectedCoin.isNotEmpty
             ? FloatingActionButton.extended(
-                onPressed: () {},
+                onPressed: () {
+                  favorites.saveAll(selectedCoin);
+                  clearSelected();
+                },
                 label: const Text(
                   'favorite',
                   style: TextStyle(
