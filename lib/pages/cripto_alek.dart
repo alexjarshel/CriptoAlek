@@ -71,7 +71,7 @@ class _CriptoAlekState extends State<CriptoAlek> {
     );
   }
 
-  clearSelected(){
+  clearSelected() {
     setState(() {
       selectedCoin = [];
     });
@@ -106,12 +106,24 @@ class _CriptoAlekState extends State<CriptoAlek> {
                         width: 40,
                         child: Image.asset(table[coin].icon),
                       ),
-                title: Text(
-                  table[coin].name,
-                  style: const TextStyle(
-                      fontSize: 17, fontWeight: FontWeight.w500),
+                title: Row(
+                  children: [
+                    Text(
+                      table[coin].name,
+                      style: const TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    if(favorites.list.contains(table[coin]))
+                      Icon(Icons.star, color: Colors.amber, size: 8)
+                    
+                  ],
                 ),
+                
+
                 trailing: Text(real.format(table[coin].price)),
+
                 // -> estilização
                 selected: selectedCoin.contains(table[coin]),
                 selectedTileColor: Colors.green[50],
