@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'pages/cripto_alek.dart';
+import 'pages/home_page.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -12,8 +13,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green
       ),
-      home: CriptoAlek(
-      ),
+      home: HomePage(),
+      //CriptoAlek(),
     );
   }
 }
