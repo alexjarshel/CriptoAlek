@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:urubu_do_pix/configs/app_setings.dart';
 import 'package:urubu_do_pix/models/coin.dart';
 import 'package:urubu_do_pix/pages/coin_details_page.dart';
 import 'package:urubu_do_pix/pages/favorite_page.dart';
@@ -16,17 +17,47 @@ class CriptoAlek extends StatefulWidget {
 
 class _CriptoAlekState extends State<CriptoAlek> {
   final table = CoinRepository.table;
-  NumberFormat real = NumberFormat.currency(locale: 'pt_BR', name: 'R\$');
+  late Map<String, String> loc;
+  late NumberFormat real;
   List<Coin> selectedCoin = [];
   late FavoritesRepository favorites;
 
   //functions
+
+  readNumberFormat(){
+    loc = context.watch<AppSettings>().locale;
+    real = NumberFormat.currency(locale:loc['locale'], name: loc['name']);
+  }
+
+  changeLanguageButton(){
+    final locale = loc['locale'] == 'pt_BR' ? 'en_US' : 'pt_BR';
+    final name = loc['locale'] == 'pt_BR' ? '\$' : 'R\$';
+
+    return PopupMenuButton(
+      icon: Icon(Icons.language),
+      itemBuilder: (context) => [
+        PopupMenuItem(child: ListTile(
+          leading: Icon(Icons.swap_vert),
+          title: Text('Use $locale'),
+          onTap: (){
+            context.read<AppSettings>().setLocale(locale, name);
+            Navigator.pop(context);
+          },
+        ))
+      ],
+    );
+
+  }
+
   dinamicAppBar() {
     if (selectedCoin.isEmpty) {
       return AppBar(
         title: const Text(
           'Cripto Alek',
         ),
+        actions: [
+          changeLanguageButton()
+        ],
         centerTitle: true,
       );
     } else {
@@ -81,6 +112,7 @@ class _CriptoAlekState extends State<CriptoAlek> {
   Widget build(BuildContext context) {
     //favorites = Provider.of<FavoritesRepository>(context);
     favorites = context.watch<FavoritesRepository>();
+    readNumberFormat();
 
     return Scaffold(
         appBar: dinamicAppBar(),
@@ -115,7 +147,7 @@ class _CriptoAlekState extends State<CriptoAlek> {
                         fontWeight: FontWeight.w500,
                       ),
                     ),
-                    if(favorites.list.contains(table[coin]))
+                    if(favorites.list.any((fav) => fav.acronym == table[coin].acronym))
                       Icon(Icons.star, color: Colors.amber, size: 8)
                     
                   ],
