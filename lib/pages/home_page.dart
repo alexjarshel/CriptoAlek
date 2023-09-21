@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:urubu_do_pix/pages/cripto_alek.dart';
 import 'package:urubu_do_pix/pages/favorite_page.dart';
 
+import 'config_pagess.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -34,6 +36,7 @@ class _HomePageState extends State<HomePage> {
         children: [
           CriptoAlek(),
           FavoritesPage(),
+          ConfigurationPage(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -41,7 +44,8 @@ class _HomePageState extends State<HomePage> {
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.list), label: 'All'),
           BottomNavigationBarItem(
-              icon: Icon(Icons.favorite), label: 'Favorites')
+              icon: Icon(Icons.favorite), label: 'Favorites'),
+          BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Configurations')
         ],
         onTap: (page) {
           pc.animateToPage(
