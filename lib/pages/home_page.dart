@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:urubu_do_pix/pages/Wallet.dart';
 import 'package:urubu_do_pix/pages/cripto_alek.dart';
 import 'package:urubu_do_pix/pages/favorite_page.dart';
 
@@ -36,16 +37,21 @@ class _HomePageState extends State<HomePage> {
         children: [
           CriptoAlek(),
           FavoritesPage(),
+          WalletPage(),
           ConfigurationPage(),
+          
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
         currentIndex: actualPage,
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.list), label: 'All'),
           BottomNavigationBarItem(
               icon: Icon(Icons.favorite), label: 'Favorites'),
-          BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Configurations')
+          BottomNavigationBarItem(icon: (Icon(Icons.wallet_outlined)), label: 'Wallet'),
+          BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Configurations'),
+          
         ],
         onTap: (page) {
           pc.animateToPage(
